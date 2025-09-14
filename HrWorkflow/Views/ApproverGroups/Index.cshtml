@@ -1,0 +1,34 @@
+@model IEnumerable<HrWorkflow.Models.ApproverGroup>
+@{
+    ViewData["Title"] = "گروه‌های تایید";
+}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>@ViewData["Title"]</h2>
+    <a class="btn btn-primary" asp-action="Create">افزودن</a>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped" data-datatable="true">
+        <thead>
+            <tr>
+                <th>نام</th>
+                <th>تعداد اعضا</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var g in Model)
+        {
+            <tr>
+                <td>@g.Name</td>
+                <td>@(g.Members?.Count ?? 0)</td>
+                <td class="text-nowrap">
+                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-route-id="@g.Id">جزئیات</a>
+                    <a class="btn btn-sm btn-outline-warning" asp-action="Edit" asp-route-id="@g.Id">ویرایش</a>
+                    <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@g.Id">حذف</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+

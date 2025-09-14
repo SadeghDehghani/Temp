@@ -1,0 +1,28 @@
+@model HrWorkflow.Models.ApproverGroup
+@{
+    ViewData["Title"] = "مدیریت اعضای گروه";
+    var employees = ViewBag.Employees as List<HrWorkflow.Models.Employee>;
+    var selectedIds = ViewBag.SelectedIds as List<int> ?? new List<int>();
+}
+<h2>@ViewData["Title"] - @Model.Name</h2>
+<form asp-action="ManageMembers" method="post">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <div class="mb-3">
+        <label class="form-label">کارمندان</label>
+        <select name="selectedEmployeeIds" multiple class="form-select" size="12">
+            @foreach (var e in employees)
+            {
+                if (selectedIds.Contains(e.Id))
+                {
+                    <option value="@e.Id" selected>@e.FullName (@e.Email)</option>
+                }
+                else
+                {
+                    <option value="@e.Id">@e.FullName (@e.Email)</option>
+                }
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">ذخیره</button>
+    <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-secondary">بازگشت</a>
+</form>
