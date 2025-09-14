@@ -1,0 +1,31 @@
+@model HrWorkflow.Models.ApproverGroup
+@{
+    ViewData["Title"] = "جزئیات گروه";
+}
+<h2>@ViewData["Title"]</h2>
+<dl class="row">
+    <dt class="col-sm-2">نام</dt>
+    <dd class="col-sm-10">@Model.Name</dd>
+</dl>
+<div class="table-responsive">
+    <table class="table table-striped" data-datatable="true">
+        <thead>
+            <tr>
+                <th>اعضا</th>
+                <th>ایمیل</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var m in Model.Members)
+        {
+            <tr>
+                <td>@m.Employee.FullName</td>
+                <td>@m.Employee.Email</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<a asp-action="ManageMembers" asp-route-id="@Model.Id" class="btn btn-primary">مدیریت اعضا</a>
+<a asp-action="Index" class="btn btn-secondary">بازگشت</a>
+
