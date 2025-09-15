@@ -1,0 +1,15 @@
+@model HrWorkflow.Models.RequestType
+@{
+    ViewData["Title"] = "حذف نوع درخواست";
+}
+<h2>@ViewData["Title"]</h2>
+<div class="alert alert-warning">آیا از حذف «@Model.Name» مطمئن هستید؟</div>
+<dl class="row">
+    <dt class="col-sm-2">توضیح</dt>
+    <dd class="col-sm-10">@Model.Description</dd>
+</dl>
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">حذف</button>
+    <a asp-action="Index" class="btn btn-secondary">انصراف</a>
+</form>

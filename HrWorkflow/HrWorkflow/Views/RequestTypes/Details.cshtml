@@ -1,0 +1,14 @@
+@model HrWorkflow.Models.RequestType
+@{
+    ViewData["Title"] = "جزئیات نوع درخواست";
+}
+<h2>@ViewData["Title"]</h2>
+<dl class="row">
+    <dt class="col-sm-2">نام</dt>
+    <dd class="col-sm-10">@Model.Name</dd>
+    <dt class="col-sm-2">توضیح</dt>
+    <dd class="col-sm-10">@Model.Description</dd>
+</dl>
+<a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-primary">ویرایش</a>
+<a asp-action="Index" class="btn btn-secondary">بازگشت</a>
+

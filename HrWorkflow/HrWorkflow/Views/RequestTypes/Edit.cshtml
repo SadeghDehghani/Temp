@@ -1,0 +1,24 @@
+@model HrWorkflow.Models.RequestType
+@{
+    ViewData["Title"] = "ویرایش نوع درخواست";
+}
+<h2>@ViewData["Title"]</h2>
+<form asp-action="Edit" method="post" class="mt-3">
+    <input type="hidden" asp-for="Id" />
+    <div class="row g-3">
+        <div class="col-md-6">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label asp-for="Description" class="form-label"></label>
+            <input asp-for="Description" class="form-control" />
+        </div>
+    </div>
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">ذخیره</button>
+        <a asp-action="Index" class="btn btn-secondary">بازگشت</a>
+    </div>
+</form>
+@section Scripts{<partial name="_ValidationScriptsPartial" />}
