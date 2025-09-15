@@ -1,0 +1,75 @@
+@model HrWorkflow.Models.Request
+@{
+    ViewData["Title"] = "جزئیات درخواست";
+}
+<h2>@Model.Title</h2>
+<div class="row g-3 mb-3">
+    <div class="col-md-4"><strong>نوع:</strong> @Model.RequestType.Name</div>
+    <div class="col-md-4"><strong>درخواست‌دهنده:</strong> @Model.RequesterEmployee.FullName</div>
+    <div class="col-md-4"><strong>وضعیت:</strong> @(Model.WorkflowInstance?.Status.ToString() ?? "ثبت اولیه")</div>
+</div>
+<div class="mb-3"><strong>توضیحات:</strong><div>@Model.Content</div></div>
+
+@if (Model.WorkflowInstance == null)
+{
+    <form asp-action="StartWorkflow" method="post">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <button class="btn btn-success">شروع گردش‌کار</button>
+    </form>
+}
+else
+{
+    <h4 class="mt-4">مراحل</h4>
+    <div class="table-responsive">
+        <table class="table table-striped" data-datatable="true">
+            <thead><tr><th>مرحله</th><th>وضعیت</th><th>از</th><th>تا</th><th>نظر</th></tr></thead>
+            <tbody>
+            @foreach (var s in Model.WorkflowInstance.StepInstances.OrderBy(si=>si.Id))
+            {
+                <tr>
+                    <td>@s.StepDefinition.Name</td>
+                    <td>@s.Status</td>
+                    <td>@s.EnteredAtUtc.ToLocalTime()</td>
+                    <td>@(s.ExitedAtUtc?.ToLocalTime().ToString() ?? "-")</td>
+                    <td>@s.Comment</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+    <h4 class="mt-4">اقدام</h4>
+    <form asp-action="Advance" method="post" class="row gy-2 gx-2 align-items-end">
+        <input type="hidden" name="id" value="@Model.Id" />
+        <input type="hidden" name="instanceId" value="@Model.WorkflowInstance.Id" />
+        <div class="col-auto">
+            <label class="form-label">اقدام</label>
+            <select name="actionName" class="form-select">
+                <option value="Approve">تایید</option>
+                <option value="Reject">رد</option>
+                <option value="Return">عودت</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <label class="form-label">کاربر اقدام‌کننده</label>
+            <select name="actorEmployeeId" class="form-select">
+                @* In real app, derive from logged-in user *@
+                @foreach (var e in (IEnumerable<Employee>)ViewBag.AllEmployees ?? Enumerable.Empty<Employee>())
+                {
+                    <option value="@e.Id">@e.FullName</option>
+                }
+            </select>
+        </div>
+        <div class="col">
+            <label class="form-label">توضیح</label>
+            <input name="comment" class="form-control" />
+        </div>
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">ثبت اقدام</button>
+        </div>
+    </form>
+}
+<div class="mt-3">
+    <a asp-action="Index" class="btn btn-secondary">بازگشت</a>
+    <a asp-action="Create" class="btn btn-outline-primary">درخواست جدید</a>
+</div>
+

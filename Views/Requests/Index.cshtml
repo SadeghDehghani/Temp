@@ -1,0 +1,36 @@
+@model IEnumerable<HrWorkflow.Models.Request>
+@{
+    ViewData["Title"] = "درخواست‌ها";
+}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>@ViewData["Title"]</h2>
+    <a class="btn btn-primary" asp-action="Create">ثبت درخواست</a>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped" data-datatable="true">
+        <thead>
+            <tr>
+                <th>عنوان</th>
+                <th>نوع</th>
+                <th>تاریخ</th>
+                <th>مرحله جاری</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td>@r.Title</td>
+                <td>@r.RequestType.Name</td>
+                <td>@r.CreatedAtUtc.ToLocalTime()</td>
+                <td>@(r.WorkflowInstance?.CurrentStep?.Name ?? "-")</td>
+                <td class="text-nowrap">
+                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-route-id="@r.Id">جزئیات</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+

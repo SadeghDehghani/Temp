@@ -1,0 +1,12 @@
+@model HrWorkflow.Models.ApproverGroup
+@{
+    ViewData["Title"] = "حذف گروه";
+}
+<h2>@ViewData["Title"]</h2>
+<div class="alert alert-warning">آیا از حذف «@Model.Name» مطمئن هستید؟</div>
+<form asp-action="Delete" method="post">
+    <input type="hidden" asp-for="Id" />
+    <button type="submit" class="btn btn-danger">حذف</button>
+    <a asp-action="Index" class="btn btn-secondary">انصراف</a>
+</form>
+
