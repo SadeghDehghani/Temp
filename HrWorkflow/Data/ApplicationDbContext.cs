@@ -52,6 +52,18 @@ namespace HrWorkflow.Data
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<WorkflowInstance>()
+                .HasOne(x => x.WorkflowDefinition)
+                .WithMany()
+                .HasForeignKey(x => x.WorkflowDefinitionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<WorkflowTransitionDefinition>()
+                .HasOne(t => t.WorkflowDefinition)
+                .WithMany(d => d.Transitions)
+                .HasForeignKey(t => t.WorkflowDefinitionId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<WorkflowInstance>()
                 .HasOne(x => x.CurrentStep)
                 .WithMany()
                 .HasForeignKey(x => x.CurrentStepId)
@@ -67,7 +79,7 @@ namespace HrWorkflow.Data
                 .HasOne(x => x.WorkflowInstance)
                 .WithOne(x => x.Request)
                 .HasForeignKey<WorkflowInstance>(x => x.RequestId)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

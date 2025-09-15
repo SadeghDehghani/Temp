@@ -70,7 +70,6 @@ namespace HrWorkflow.Models
 
         public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow;
 
-        public int? WorkflowInstanceId { get; set; }
         public WorkflowInstance? WorkflowInstance { get; set; }
     }
 

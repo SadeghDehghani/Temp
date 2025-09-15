@@ -60,9 +60,6 @@ namespace HrWorkflow.Services
             _dbContext.WorkflowStepInstances.Add(stepInstance);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            request.WorkflowInstanceId = instance.Id;
-            await _dbContext.SaveChangesAsync(cancellationToken);
-
             return instance;
         }
 

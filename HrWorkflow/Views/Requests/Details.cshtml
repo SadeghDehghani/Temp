@@ -10,7 +10,7 @@
 </div>
 <div class="mb-3"><strong>توضیحات:</strong><div>@Model.Content</div></div>
 
-@if (Model.WorkflowInstanceId == null)
+@if (Model.WorkflowInstance == null)
 {
     <form asp-action="StartWorkflow" method="post">
         <input type="hidden" name="id" value="@Model.Id" />
@@ -40,7 +40,7 @@ else
     <h4 class="mt-4">اقدام</h4>
     <form asp-action="Advance" method="post" class="row gy-2 gx-2 align-items-end">
         <input type="hidden" name="id" value="@Model.Id" />
-        <input type="hidden" name="instanceId" value="@Model.WorkflowInstanceId" />
+        <input type="hidden" name="instanceId" value="@Model.WorkflowInstance.Id" />
         <div class="col-auto">
             <label class="form-label">اقدام</label>
             <select name="actionName" class="form-select">
