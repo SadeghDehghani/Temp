@@ -1,0 +1,34 @@
+@model IEnumerable<HrWorkflow.Models.RequestType>
+@{
+    ViewData["Title"] = "انواع درخواست";
+}
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>@ViewData["Title"]</h2>
+    <a class="btn btn-primary" asp-action="Create">افزودن</a>
+</div>
+<div class="table-responsive">
+    <table class="table table-striped" data-datatable="true">
+        <thead>
+            <tr>
+                <th>نام</th>
+                <th>توضیح</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Description</td>
+                <td class="text-nowrap">
+                    <a class="btn btn-sm btn-outline-info" asp-action="Details" asp-route-id="@item.Id">جزئیات</a>
+                    <a class="btn btn-sm btn-outline-warning" asp-action="Edit" asp-route-id="@item.Id">ویرایش</a>
+                    <a class="btn btn-sm btn-outline-danger" asp-action="Delete" asp-route-id="@item.Id">حذف</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+
